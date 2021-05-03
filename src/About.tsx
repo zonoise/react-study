@@ -6,7 +6,6 @@ function About(){
         <div className="About">
             <p>about</p>
         </div>
-
     );
 }
 
