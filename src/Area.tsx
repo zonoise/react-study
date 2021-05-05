@@ -3,14 +3,7 @@ import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Light from './Light';
-
-interface LightProps {
-    id:number,
-    lat:number;//latitude
-    long:number;//longitude
-    status?:string;
-    checked:boolean;
-}
+import {LightProps} from './Types';
 
 const AREA_KEY = "AREA";
 
@@ -29,18 +22,21 @@ function Area(){
             const lightList:LightProps[] = [
                 {
                     id:1,
+                    name:"HogeStreet1-1-1",
                     lat:1,
                     long:1,
                     checked:true
                 },
                 {
                     id:2,
+                    name:"HogeStreet1-1-2",
                     lat:2,
                     long:2,
                     checked:false
                 },
                 {
                     id:3,
+                    name:"HogeStreet1-1-3",
                     lat:3,
                     long:3,
                     checked:false
@@ -51,10 +47,9 @@ function Area(){
         } 
     }, [])
 
-    const handleClick = useCallback((targetId) => {
+    const handleClick:(targetId:any) => void = useCallback((targetId) => {
 
         const index = lights.findIndex(light => light.id === targetId);
-        
         const light = lights[index];
         light.checked = !light.checked ;
         
@@ -71,10 +66,10 @@ function Area(){
     return (
         <div className="Area">
             <p>area</p>
-            {lights.map((light) => (
-                <Light key={light.id} id={light.id} lat={light.lat} long={light.long} checked={light.checked}
-                handleClick={handleClick}></Light>
-            ))}
+            {lights.map((light) => {
+                const newLight = Object.assign(light,{handleClick: ()=>(handleClick(light.id)),key:light.id});//書き方これでいい？？
+                return <Light {...newLight} />
+            })}
         </div>
     );
 }
