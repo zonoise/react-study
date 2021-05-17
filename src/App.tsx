@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import About from './About';
 import Area from './Area';
 import MenuIcon from '@material-ui/icons/Menu';
+import LightDetail from './LightDetail';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,12 +63,14 @@ function App() {
           </IconButton>
           <Button component={Link} className={classes.title} to="/area" variant="contained" >Area</Button>
           <Button component={Link} className={classes.title} to="/about" variant="contained">About</Button>
+          <Button component={Link} className={classes.title} to="/lightDetail" variant="contained">Detail</Button>
         </Toolbar>
       </AppBar>
 
         <Switch>
           <Route path="/about" children={<About />} />
           <Route path="/area" children={<Area />} />
+          <Route path="/lightDetail" children={<LightDetail />} />
         </Switch>
       </BrowserRouter>
       </div>
