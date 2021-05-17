@@ -3,20 +3,21 @@ import { GoogleMap, useJsApiLoader, useLoadScript } from '@react-google-maps/api
 import { Button } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
+import { useLocation, useParams } from 'react-router-dom';
 
 const containerStyle = {
     width: '400px',
     height: '400px'
 };
 
-type Position = {
+type LightDetailProps = {
     lat: number,
     lng: number
-}
-
-type LightDetailProps = {
-    center: Position
 };
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 const GoogleMapComponent = (props: LightDetailProps) => {
 
@@ -45,7 +46,7 @@ const GoogleMapComponent = (props: LightDetailProps) => {
     return isLoaded ? (
         <GoogleMap
             mapContainerStyle={containerStyle}
-            center={props.center}
+            center={{lat:props.lat,lng:props.lng}}
             zoom={12}
             onLoad={onLoad}
             onUnmount={onUnmount}
@@ -60,25 +61,20 @@ export const Map =  React.memo(GoogleMapComponent)
 
 export default function LightDetail() {
 
-    const props: LightDetailProps = {
-        center:
-        {
-            lat: 35,
-            lng: 135
-        }
-    }
+    let query = useQuery();
 
-    const [lat,setLat] = useState(35);
-    const [lng,setLng] = useState(135);
+    const qLat:number = Number(query.get("lat")) ?? 0;
+    const qLng:number = Number(query.get("lng")) ?? 0;
 
-    const [detail,setPosition]= useState<LightDetailProps>(props);
+    const [lat,setLat] = useState(qLat);
+    const [lng,setLng] = useState(qLng);
+
+    const [position,setPosition]= useState<LightDetailProps>({lat:qLat,lng:qLng});
 
     const handleClick = () =>{
         
-        const newLightDetail = Object.assign({},{center:{
-            lat:lat,
-            lng:lng
-        }});
+        const newLightDetail = Object.assign({},{lat:position.lat+0.001,lng:position.lng});
+        
         setPosition(newLightDetail);
     }
     
@@ -89,7 +85,7 @@ export default function LightDetail() {
                 <TextField label={"経度 lng"} onChange={e => setLng(Number(e.target.value)) } value={lng}/>
                 <Button onClick={handleClick}>Update</Button>
             </form>
-            <Map  {...detail} />
+            <Map  {...position} />
         </Box>
     )
 }
