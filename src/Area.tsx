@@ -4,10 +4,23 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import Light from './Light';
 import {LightProps} from './Types';
+import { Container, makeStyles, Paper, Typography } from '@material-ui/core';
+import gray from '@material-ui/core/colors/grey';
 
 const AREA_KEY = "AREA";
 
+const useStyles = makeStyles((theme) => ({
+    root:{
+        backgroundColor:gray[100]
+    },
+    container:{
+        backgroundColor: gray[200]
+    }
+}));
+
 function Area(){
+
+    const classes = useStyles();
 
     const [lights, setLights] = useState<LightProps[]>([]);
 
@@ -64,12 +77,14 @@ function Area(){
     }, [lights])
 
     return (
-        <div className="Area">
-            <p>area</p>
+        <div className={classes.root}>
+            <Typography variant="h4">Area</Typography>
+            <Container className={classes.container} fixed>
             {lights.map((light) => {
                 const newLight = Object.assign(light,{handleClick: ()=>(handleClick(light.id)),key:light.id});//書き方これでいい？？
                 return <Light {...newLight} />
             })}
+            </Container>
         </div>
     );
 }

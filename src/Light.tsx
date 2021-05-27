@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
+    detailButton : {
+        marginLeft:'16px',
+    },
+    submitButton : {
+        marginLeft:'16px',
+    }
   }));
 
 function Light(props:LightProps){
@@ -17,19 +23,25 @@ function Light(props:LightProps){
 
     return (
         <div className={classes.root}>
-            <Box display="flex" p={1} bgcolor="grey.300" >
-                <Box m={1} bgcolor="white">{props.name}</Box>
-                <Box m={1} bgcolor="white">緯度{props.lat}</Box>
-                <Box m={1} bgcolor="white">経度{props.long}</Box>
+            <Box display="flex" border={0} boxShadow={1} m={1} p={0} bgcolor="grey.300" >
+                <Box m={1} p={1} width={"200px"} bgcolor="white">{props.name}</Box>
+                <Box m={1} p={1} width={"200px"} bgcolor="white" textAlign="center">緯度{props.lat}</Box>
+                <Box m={1} p={1} width={"200px"} bgcolor="white">経度{props.long}</Box>
                 <Box m={1} bgcolor="white">{props.status}</Box>
-                <Box m={1} bgcolor="white">checked: {props.checked.toString()}</Box>
-                <Button component={Link} to={"/lightDetail?"+param} variant="contained">Detail</Button>
-                <Button variant="contained" color="primary" 
-                    onClick={() =>{ 
-                        if(props.handleClick){
-                            props.handleClick(props.id);
-                        }
-                    }}>問題なし</Button>
+
+                {/* ここから右寄りに */}
+                <Box m={1} ml={"auto"}　p={1} textAlign="center" bgcolor="white">checked: {props.checked.toString()}</Box>
+
+                <Box display="flex" alignItems="center" m={0} p={0} bgcolor="grey.400">
+                    <Button className={classes.detailButton} component={Link} to={"/lightDetail?"+param} variant="outlined">Detail</Button>
+                    
+                    <Button className={classes.submitButton} variant="contained" color="primary" 
+                        onClick={() =>{ 
+                            if(props.handleClick){
+                                props.handleClick(props.id);
+                            }
+                        }}>問題なし</Button>
+                </Box>
             </Box>
         </div>
     );

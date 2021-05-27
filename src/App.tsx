@@ -66,7 +66,6 @@ function App() {
           <Button component={Link} className={classes.title} to="/lightDetail" variant="contained">Detail</Button>
         </Toolbar>
       </AppBar>
-
         <Switch>
           <Route path="/about" children={<About />} />
           <Route path="/area" children={<Area />} />
