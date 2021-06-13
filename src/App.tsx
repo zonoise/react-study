@@ -8,6 +8,11 @@ import Area from './Area';
 import MenuIcon from '@material-ui/icons/Menu';
 import LightDetail from './LightDetail';
 
+
+import {store} from './app/store';
+import { Provider } from 'react-redux'
+import {Counter} from './feature/counter/Counter';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -55,24 +60,27 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Button component={Link} className={classes.title} to="/area" variant="contained" >Area</Button>
-          <Button component={Link} className={classes.title} to="/about" variant="contained">About</Button>
-          <Button component={Link} className={classes.title} to="/lightDetail" variant="contained">Detail</Button>
-        </Toolbar>
-      </AppBar>
-        <Switch>
-          <Route path="/about" children={<About />} />
-          <Route path="/area" children={<Area />} />
-          <Route path="/lightDetail" children={<LightDetail />} />
-        </Switch>
-      </BrowserRouter>
-      </div>
+      <Provider store={store}>
+        <BrowserRouter>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Button component={Link} className={classes.title} to="/area" variant="contained" >Area</Button>
+            <Button component={Link} className={classes.title} to="/about" variant="contained">About</Button>
+            <Button component={Link} className={classes.title} to="/lightDetail" variant="contained">Detail</Button>
+          </Toolbar>
+        </AppBar>
+          <Counter />
+          <Switch>
+            <Route path="/about" children={<About />} />
+            <Route path="/area" children={<Area />} />
+            <Route path="/lightDetail" children={<LightDetail />} />
+          </Switch>
+        </BrowserRouter>
+      </Provider>
+    </div>
   );
 }
 
