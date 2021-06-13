@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import counterReducer from '../feature/counter/counterSlice'
+import {googleMapReducer} from '../feature/googlemap/googleMapSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer
+    counter: counterReducer,
+    googlMap: googleMapReducer
   },
 })
 

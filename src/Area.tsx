@@ -6,6 +6,8 @@ import Light from './Light';
 import {LightProps} from './Types';
 import { Container, makeStyles, Paper, Typography } from '@material-ui/core';
 import gray from '@material-ui/core/colors/grey';
+import {Map} from './LightDetail';
+import { useAppSelector } from './app/hooks';
 
 const AREA_KEY = "AREA";
 
@@ -23,6 +25,8 @@ function Area(){
     const classes = useStyles();
 
     const [lights, setLights] = useState<LightProps[]>([]);
+
+    const position = useAppSelector((state) => state.googlMap )
 
     useEffect(() => {
 
@@ -76,6 +80,8 @@ function Area(){
         localStorage.setItem(AREA_KEY, JSON.stringify(lights))
     }, [lights])
 
+    // const position = {lat:1,lng:1};
+
     return (
         <div className={classes.root}>
             <Typography variant="h4">Area</Typography>
@@ -85,6 +91,7 @@ function Area(){
                 return <Light {...newLight} />
             })}
             </Container>
+            <Map  {...position} />
         </div>
     );
 }
